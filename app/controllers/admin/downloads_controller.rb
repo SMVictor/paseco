@@ -342,14 +342,14 @@ module Admin
               last_end   = entry.end_date 
             end 
           end 
-
-          if (last_entry.to_time >= Role.find(@roles.first).start_date.to_time && last_entry.to_time <= Role.find(@roles.last).end_date.to_time) || (last_end != "" && last_end.to_time >= Role.find(@roles.first).start_date.to_time && last_end.to_time <= Role.find(@roles.last).end_date.to_time) 
+          
+          if (last_entry.to_time >= Role.find(@roles.last).start_date.to_time && last_entry.to_time <= Role.find(@roles.first).end_date.to_time) || (last_end != "" && last_end.to_time >= Role.find(@roles.last).start_date.to_time && last_end.to_time <= Role.find(@roles.first).end_date.to_time) 
             row << last_entry
           else 
             row << ''
           end 
 
-          if last_end != "" && last_end.to_time >= Role.find(@roles.first).start_date.to_time && last_end.to_time <= Role.find(@roles.last).end_date.to_time 
+          if last_end != "" && last_end.to_time >= Role.find(@roles.last).start_date.to_time && last_end.to_time <= Role.find(@roles.first).end_date.to_time 
             row << last_end
           else 
             row << ''
