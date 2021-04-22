@@ -102,17 +102,26 @@ class Employee < ApplicationRecord
     end
 
     if @shift.name == "Libre" || @shift.name == "Vacaciones"
+
       @day_salary = min_salary.to_f/30
+
     elsif @shift.name == "Permiso" || @shift.name == "Ausente" || @shift.name == "Suspendido"
+
       @day_salary = 0
+
     elsif @shift.name == "Incapacidad"
+
       @day_salary = 0
+
       self.disabilities.order(:start_date).each do |last_disability_period|
+
         dates = (last_disability_period.start_date..last_disability_period.end_date).map(&:to_date)
         first_dates = dates[0, 3] if dates
-        if first_dates && (first_dates.include? Date.strptime(role_line.date, '%m/%d/%Y'))
+
+        if first_dates && (first_dates.include? Date.strptime(role_line.date, '%m/%d/%Y')) && last_disability_period.institution == "CCSS"
           @day_salary = (min_salary.to_f/30)/2
         end
+
       end
     else
       @normal_day_hours = 0

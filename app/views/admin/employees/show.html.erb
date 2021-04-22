@@ -223,13 +223,17 @@
       
       <% if @employee.disabilities %>
         <% @employee.disabilities.each do  |disability| %>
-          <div class="col-md-6 col-sm-6 mt-2">
+          <div class="col-md-4 col-sm-4 mt-2">
             <strong>Fecha de Inicio:</strong>
             <p><%= disability.start_date %></p>
           </div>
-          <div class="col-md-6 col-sm-6 mt-2">
+          <div class="col-md-4 col-sm-4 mt-2">
             <strong>Fecha de Finalización:</strong>
             <p><%= disability.end_date %></p>
+          </div>
+          <div class="col-md-4 col-sm-4 mt-2">
+            <strong>Institución:</strong>
+            <p><%= disability.institution %></p>
           </div>
         <% end %>
       <% end %>
