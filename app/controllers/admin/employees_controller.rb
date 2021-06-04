@@ -28,7 +28,6 @@ module Admin
     end
 
     def show
-      sort_entries
       @employee.calculate_vacations
       sort_vacations
       sort_movements
@@ -254,12 +253,6 @@ module Admin
           end
         end
         @employee.save
-      end
-
-      def sort_entries
-        Entry.all.each do |entry|
-          entry.update(sortable_date: entry.start_date.to_date)
-        end
       end
 
       def sort_movements
