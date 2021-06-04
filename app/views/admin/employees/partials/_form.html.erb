@@ -155,7 +155,7 @@
     <div class="col-12">
       <div class="col-12">
         <div class="row tbl_row mt-4">
-          <%= form.fields_for :entries do |entry| %>
+          <%= form.fields_for :entries, @employee.entries.order(sortable_date: :DESC)  do |entry| %>
             <%= render 'admin/employees/entry_fields', f: entry %>
           <%end%>
         </div>
@@ -174,7 +174,7 @@
     <div class="col-12">
       <div class="col-12">
         <div class="row tbl_row mt-4">
-          <%= form.fields_for :disabilities do |disability| %>
+          <%= form.fields_for :disabilities, @employee.disabilities.order(start_date: :DESC) do |disability| %>
             <%= render 'admin/employees/disability_fields', f: disability %>
           <%end%>
         </div>

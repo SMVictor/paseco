@@ -329,6 +329,7 @@ class RolesController < ApplicationController
     @role_line = RoleLine.find(params[:line_id])
     if (DateTime.parse(@role.end_date) + 5.days) > Date.today
       @role_line.update(role_line_params)
+      update_payrole_info(@role_line.role, @role_line.employee)
     end
     respond_to do |format|
       format.html { redirect_to admin_payrole_detail_url }
@@ -403,6 +404,8 @@ class RolesController < ApplicationController
         detail_line.service              = line.sub_service.service.name
         detail_line.sub_service          = line.sub_service.name
         detail_line.stall_type           = line.stall.type.name
+        detail_line.stall_id             = line.stall.id
+        detail_line.shift_id             = line.shift.id
 
         detail_line_id += 1
         detail_line.save

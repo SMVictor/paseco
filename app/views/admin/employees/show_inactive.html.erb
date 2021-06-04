@@ -187,7 +187,7 @@
   </div>
   
   <% if @employee.entries %>
-    <% @employee.entries.each do  |entry| %>
+    <% @employee.entries.order(sortable_date: :DESC).each do  |entry| %>
       <div class="col-md-3 col-sm-6 mt-2">
         <strong>Fecha de Contratación:</strong>
         <p><%= entry.start_date %></p>

@@ -52,10 +52,27 @@
                           <tbody>
                             <% begin %>
                             <% @employee.payrole_details.where(role_id: @payrole.id).first.detail_lines.order(date: :asc).each do |line|  %>
+
+                              <% disability_type = "" %>
+
+                              <% if line.shift_name == "Incapacidad"
+
+                                @employee.disabilities.order(:start_date).each do |last_disability_period|
+
+                                  dates = (last_disability_period.start_date..last_disability_period.end_date).map(&:to_date)
+
+                                  if dates && (dates.include? Date.strptime(line.date, '%m/%d/%Y')) && last_disability_period.institution == "CCSS"
+                                    disability_type = " CCSS"
+                                  elsif dates && (dates.include? Date.strptime(line.date, '%m/%d/%Y')) && last_disability_period.institution == "INS"
+                                    disability_type = " INS"
+                                  end
+                                end
+                              end %>
+
                               <tr>
                                 <td style="border: 1px solid"><%= line.stall_name %></td>
                                 <td style="border: 1px solid"><%= line.date.split("/")[1] + "/" + line.date.split("/")[0] + "/" + line.date.split("/")[2] %></td>
-                                <td style="border: 1px solid; min-width: 175px;"><%= line.shift_name %></td>
+                                <td style="border: 1px solid; min-width: 175px;"><%= line.shift_name + disability_type %></td>
                                 <td style="border: 1px solid"><%= line.substall %></td>
                                 <td style="border: 1px solid"><%= line.hours.to_f.round(2) %></td>
                                 <td style="border: 1px solid"><%= number_to_currency(line.salary.to_f.round(2), unit: '₡') %></td>

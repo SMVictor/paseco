@@ -151,7 +151,7 @@
     </div>
     <div class="col-12">
       <div class="entry-fields mt-4">
-        <%= form.fields_for :entries do |entry| %>
+        <%= form.fields_for :entries, @employee.entries.order(sortable_date: :DESC) do |entry| %>
           <%= render 'admin/employees/entry_fields', f: entry %>
         <%end%>
       </div>

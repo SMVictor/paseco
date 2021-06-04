@@ -1,18 +1,29 @@
 <div id="" class="col-12 fields nested-fields text-center tbl_row pb-2">
   <div class="row">
-    <div class="col-xl-3 col-md-6 mt-2">
+    <div class="col-xl-2 col-md-6 mt-2">
       <label for="">Inicio</label>
-      <%= f.text_field :start_date, id: "date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control text-center", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', required: true, oninvalid: "setCustomValidity('Seleccione una fecha de inicio.')", onchange: "setCustomValidity('')", title: "Seleccione una fecha de inicio." %>
+      <% start_date = f.object.start_date.strftime("%d/%m/%Y") if f.object.start_date %>
+      <%= f.text_field :start_date, value: start_date, id: "date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control text-center", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', required: true, oninvalid: "setCustomValidity('Seleccione una fecha de inicio.')", onchange: "setCustomValidity('')", title: "Seleccione una fecha de inicio." %>
     </div>
-    <div class="col-xl-3 col-md-6 mt-2">
+    <div class="col-xl-2 col-md-6 mt-2">
       <label for="">Finalización</label>
-      <%= f.text_field :end_date, id: "end_date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control text-center", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', title: "Seleccione una fecha de fin." %>
+      <% end_date = f.object.end_date.strftime("%d/%m/%Y") if f.object.end_date %>
+      <%= f.text_field :end_date, value: end_date, id: "end_date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control text-center", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', title: "Seleccione una fecha de fin." %>
     </div>
     <div class="col-xl-3 col-md-6 mt-2">
       <label for="institution">Institución</label>
       <%= f.select(:institution, ["CCSS", "INS"], {include_blank: "Seleccione una institución"}, { class: "form-control", required: true, oninvalid: "setCustomValidity('Seleccione una institución')", onchange: "setCustomValidity('')", title: "Seleccione una institución" }) %>
+    </div>
+    <div class="col-xl-3 col-lg-6 mt-2">
+      <label for="">Documento</label>
+      <div class="input-group text-left" style="border: 1px solid #F2F2F2;">
+        <div class="custom-file">
+          <%= f.file_field :document, id: "file", title: "Seleccione un archivo", class: "custom-file-input"%>
+          <label class="custom-file-label file-label" id="lebel-file" for="file">Cargar</label>
+        </div>
+      </div>
     </div>    
-    <div class="col-xl-3 col-md-12  mt-2">
+    <div class="col-xl-2 col-md-12  mt-2">
       <label for="">Acciones</label><br>
       <%= link_to_remove_association "", f, class: "fas fa-trash-alt", id: 'remove_link', style: "color: red" %>
     </div>

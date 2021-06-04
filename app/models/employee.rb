@@ -121,7 +121,6 @@ class Employee < ApplicationRecord
         if first_dates && (first_dates.include? Date.strptime(role_line.date, '%m/%d/%Y')) && last_disability_period.institution == "CCSS"
           @day_salary = (min_salary.to_f/30)/2
         end
-
       end
     else
       @normal_day_hours = 0

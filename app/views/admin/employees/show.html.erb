@@ -193,7 +193,7 @@
       </div>
       
       <% if @employee.entries %>
-        <% @employee.entries.each do  |entry| %>
+        <% @employee.entries.order(sortable_date: :DESC).each do  |entry| %>
           <div class="col-md-3 col-sm-6 mt-2">
             <strong>Fecha de Contratación:</strong>
             <p><%= entry.start_date %></p>
@@ -222,18 +222,24 @@
       </div>
       
       <% if @employee.disabilities %>
-        <% @employee.disabilities.each do  |disability| %>
-          <div class="col-md-4 col-sm-4 mt-2">
+        <% @employee.disabilities.order(start_date: :DESC).each do  |disability| %>
+          <div class="col-md-3 col-sm-6 mt-2">
             <strong>Fecha de Inicio:</strong>
-            <p><%= disability.start_date %></p>
+            <p><%= disability.start_date.strftime('%d/%m/%Y') %></p>
           </div>
-          <div class="col-md-4 col-sm-4 mt-2">
+          <div class="col-md-3 col-sm-6 mt-2">
             <strong>Fecha de Finalización:</strong>
-            <p><%= disability.end_date %></p>
+            <p><%= disability.end_date.strftime('%d/%m/%Y') %></p>
           </div>
-          <div class="col-md-4 col-sm-4 mt-2">
+          <div class="col-md-3 col-sm-6 mt-2">
             <strong>Institución:</strong>
             <p><%= disability.institution %></p>
+          </div>
+          <div class="col-md-3 col-sm-6 mt-2">
+            <strong>Documento:</strong><br>
+            <% if disability.document %>
+              <a href="<%= disability.document_url %>" target="_blank" >Click Aquí</a>
+            <% end %>
           </div>
         <% end %>
       <% end %>

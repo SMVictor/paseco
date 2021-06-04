@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_21_042231) do
+ActiveRecord::Schema.define(version: 2021_05_27_032539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 2021_04_21_042231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "institution"
+    t.string "document"
     t.index ["employee_id"], name: "index_disabilities_on_employee_id"
   end
 
@@ -245,6 +246,7 @@ ActiveRecord::Schema.define(version: 2021_04_21_042231) do
     t.bigint "employee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "sortable_date"
     t.index ["customer_id"], name: "index_entries_on_customer_id"
     t.index ["employee_id"], name: "index_entries_on_employee_id"
   end

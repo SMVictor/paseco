@@ -59,13 +59,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.delivery_method = :smtp 
   config.action_mailer.smtp_settings = { 
-    address: "smtp.office365.com",
+    address: "smtp.gmail.com",
     port: 587,
     pool: true, 
     domain: "localhost", 
-    user_name: "recursoshumanos@pasecocr.com", 
-    password: "Wof28131",
-    authentication: 'login', 
-    enable_starttls_auto: true
+    user_name: "sistemapaseco@gmail.com", 
+    password: "SistemaPaseco.2020",
+    authentication: 'plain', 
+    #enable_starttls_auto: true
   }
 end
