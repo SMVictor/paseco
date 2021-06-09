@@ -315,11 +315,12 @@ module Admin
     private
 
     def generate_headers
-      @headers = ['CÉDULA', 'FECHA INGRESO', 'FECHA SALIDA', 'NOMBRE', 'SERVICIO']
+      @headers = ['CÉDULA', 'FECHA INGRESO', 'FECHA SALIDA', 'NOMBRE']
       @roles.each do |role|
       	@headers << Role.find(role).name
       end
       @headers << 'TOTAL'
+      @headers << 'SERVICIO'
     end
 
     def generate_rows
