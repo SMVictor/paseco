@@ -50,8 +50,10 @@ class Employee < ApplicationRecord
     @used_vacations_days      = 0
     @available_vacations_days = 0
 
-    start_date = self.entries.last != nil && self.entries.last.start_date != "" ? DateTime.parse(self.entries.last.start_date) : Time.now
-    end_date   = self.entries.last != nil && self.entries.last.end_date   != "" ? DateTime.parse(self.entries.last.end_date)   : Time.now
+    last_entry = self.entries.order(:sortable_date).last
+
+    start_date = last_entry != nil && last_entry.start_date != "" ? DateTime.parse(last_entry.start_date) : Time.now
+    end_date   = last_entry != nil && last_entry.end_date   != "" ? DateTime.parse(last_entry.end_date)   : Time.now
 
     total_worked_months = -1
 
@@ -60,7 +62,7 @@ class Employee < ApplicationRecord
       start_date += 1.months
     end
 
-    start_date = self.entries.last != nil && self.entries.last.start_date != "" ? DateTime.parse(self.entries.last.start_date) : Time.now
+    start_date = last_entry != nil && last_entry.start_date != "" ? DateTime.parse(last_entry.start_date) : Time.now
 
     worked_years  = 0
     worked_months = 0  
