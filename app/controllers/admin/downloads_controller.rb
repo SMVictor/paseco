@@ -315,7 +315,7 @@ module Admin
     private
 
     def generate_headers
-      @headers = ['CÉDULA', 'FECHA INGRESO', 'FECHA SALIDA', 'NOMBRE']
+      @headers = ['CÉDULA', 'FECHA INGRESO', 'FECHA SALIDA', 'NOMBRE', 'SERVICIO']
       @roles.each do |role|
       	@headers << Role.find(role).name
       end
@@ -370,7 +370,23 @@ module Admin
           end
         end 
         row << helper.number_to_currency(total.round(2), unit: '₡')
-        @rows << row 	
+
+        services = []
+
+        employee.sub_services.each do |sub_service|
+          services << sub_service.service.name
+        end
+
+        services.uniq
+
+        services_names = ''
+
+        services.each do |service|
+          services_names += (service + ' ')
+        end
+
+        row << services_names
+        @rows << row
       end
     end
 
