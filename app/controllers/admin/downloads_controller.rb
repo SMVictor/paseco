@@ -259,9 +259,9 @@ module Admin
         @headers = ['Nombre', 'Genero', 'Tipo de Identificación', 'Identificación', 'Fecha de Nacimiento', 'Provincia', 'Cantón', 'Distrito',
                     'Otras Señas', 'Teléfono 1', 'Teléfono 2', 'Correo', 'Contacto de Emergencia', 'Número Contacto Emergencia', 'Banco', 
                     'Cuenta','Dueño de la cuenta', 'Identificación del Propietario', 'Método de Pago', 'Número de Seguro', 'Tipo de Seguro', 'Viáticos', 
-                    'Completo', 'Librero']
+                    'Completo', 'Librero', 'Último Ingreso']
 
-        entities = Employee.select('name', 'gender', 'id_type', 'identification', 'birthday', 'province', 'canton', 'district', 'other', 
+        entities = Employee.select('id', 'name', 'gender', 'id_type', 'identification', 'birthday', 'province', 'canton', 'district', 'other', 
                                 'phone', 'phone_1', 'email', 'emergency_contact', 'emergency_number', 'bank', 'account', 'account_owner', 
                                 'account_identification', 'payment_method', 'ccss_number', 'social_security', 'daily_viatical', 'ccss_type', 
                                 'special').where(active: params[:status]).order(:name)
@@ -294,6 +294,8 @@ module Admin
           row << if entity.daily_viatical == "yes" then 'Sí' else "No" end
           row << if entity.ccss_type == "yes" then 'Sí' else "No" end
           row << if entity.special == "true" then 'Sí' else "No" end
+
+          row << entity.entries.order(:sortable_date).last.start_date if entity.entries != []
           
           @rows << row
 
