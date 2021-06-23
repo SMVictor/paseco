@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_27_032539) do
+ActiveRecord::Schema.define(version: 2021_06_11_002608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 2021_05_27_032539) do
     t.string "email"
     t.boolean "retired", default: false
     t.boolean "has_christmas_bonus", default: true
+    t.float "own_ccss_deduction"
   end
 
   create_table "employees_positions", id: false, force: :cascade do |t|

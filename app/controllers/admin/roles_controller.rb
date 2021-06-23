@@ -370,6 +370,12 @@ class RolesController < ApplicationController
       @total_viatical       = 0
       @total_holidays       = 0
 
+      #Para los casos que tienen deducción de la caja diferenciada
+      @total_ccss_day_salary   = 0
+      @total_ccss_extra_salary = 0
+      @total_ccss_viatical     = 0
+      @total_ccss_holidays     = 0
+
       @role_lines.each do |line|
 
         employee.calculate_daily_viatical(line)
@@ -407,10 +413,24 @@ class RolesController < ApplicationController
         detail_line.stall_id             = line.stall.id
         detail_line.shift_id             = line.shift.id
 
+        #Para los casos que tienen deducción de la caja diferenciada
+        if employee.own_ccss_deduction != nil && employee.own_ccss_deduction > 0
+
+          @total_ccss_viatical     += employee.viatical
+
+          employee.calculate_day_salary_with_min_salary(line, employee.own_ccss_deduction)
+
+          @total_ccss_day_salary   += employee.day_salary
+          @total_ccss_extra_salary += employee.extra_day_salary
+          @total_ccss_holidays     += employee.holiday
+          
+        end
+
         detail_line_id += 1
         detail_line.save
 
       end
+
       employee.calculate_payment(@role_lines.length, @total_day_salary, @total_extra_hours, @total_extra_salary, @total_viatical, @total_extra_payments, @total_deductions, @total_holidays)
       employee.add_automatic_movements(role)
 
@@ -442,6 +462,20 @@ class RolesController < ApplicationController
       payrole_detail.gross_salary   = (employee.total_day_salary + employee.total_holidays + employee.total_extra_salary + employee.total_viatical + employee.total_exta_payments).round(2)
       payrole_detail.ccss_deduction = employee.ccss_deduction.round(2) 
       payrole_detail.net_salary     = employee.net_salary.round(2)
+
+      #Para los casos que tienen deducción de la caja diferenciada
+      if employee.own_ccss_deduction != nil && employee.own_ccss_deduction > 0
+
+        old_gross_salary = employee.net_salary + employee.ccss_deduction
+
+        employee.calculate_payment(@role_lines.length, @total_ccss_day_salary, @total_extra_hours, @total_ccss_extra_salary, @total_ccss_viatical, @total_extra_payments, @total_deductions, @total_ccss_holidays)
+        
+        @payrole_line.ccss_deduction  = employee.ccss_deduction.round(2)
+        @payrole_line.net_salary      = (old_gross_salary - employee.ccss_deduction).round(2)
+        payrole_detail.ccss_deduction = employee.ccss_deduction.round(2)
+        payrole_detail.net_salary     = (old_gross_salary - employee.ccss_deduction).round(2)
+
+      end
 
       @payrole_line.save
       payrole_detail.save

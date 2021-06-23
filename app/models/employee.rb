@@ -85,12 +85,6 @@ class Employee < ApplicationRecord
     @stall = role_line.stall
     @shift = role_line.shift
 
-    @normal_day_hours = 0
-    @day_salary       = 0
-    @extra_day_hours  = 0
-    @extra_day_salary = 0
-    @holiday          = 0
-
     if role_line.position.name == "Oficial"
       if role_line.shift.name == "Noche" && @stall.quote.night_salary != nil && @stall.quote.night_salary != ""
         @stall.quote.daily_salary = @stall.quote.night_salary
@@ -103,39 +97,8 @@ class Employee < ApplicationRecord
       min_salary  = role_line.position.salary
     end
 
-    if @shift.name == "Libre" || @shift.name == "Vacaciones"
+    calculate_day_salary_with_min_salary(role_line, min_salary)
 
-      @day_salary = min_salary.to_f/30
-
-    elsif @shift.name == "Permiso" || @shift.name == "Ausente" || @shift.name == "Suspendido"
-
-      @day_salary = 0
-
-    elsif @shift.name == "Incapacidad"
-
-      @day_salary = 0
-
-      self.disabilities.order(:start_date).each do |last_disability_period|
-
-        dates = (last_disability_period.start_date..last_disability_period.end_date).map(&:to_date)
-        first_dates = dates[0, 3] if dates
-
-        if first_dates && (first_dates.include? Date.strptime(role_line.date, '%m/%d/%Y')) && last_disability_period.institution == "CCSS"
-          @day_salary = (min_salary.to_f/30)/2
-        end
-      end
-    else
-      @normal_day_hours = 0
-      @extra_day_hours  = 0
-      @shift.time       = role_line.position.hours if role_line.position.hours != nil && role_line.position.hours != ""
-      @hour_cost        = min_salary.to_f/30/@shift.time.to_f
-      @extra_day_hours  = role_line.hours.to_f - @shift.time.to_f if role_line.hours.to_f > @shift.time.to_f && @shift.payment.name != "Normal"
-      @normal_day_hours = role_line.hours.to_f - @extra_day_hours
-      @day_salary       = @normal_day_hours * @hour_cost
-      @extra_day_salary = ((min_salary.to_f/30)/@shift.time.to_f) * @shift.extra_time_cost.to_f * @extra_day_hours
-
-      calculate_holiday(role_line, @shift, min_salary)
-    end
     rescue => ex
       logger.error ex.message
     end
@@ -309,6 +272,54 @@ class Employee < ApplicationRecord
     else
       #No hay feriado
       @holiday = 0
+    end
+  end
+  def calculate_day_salary_with_min_salary(role_line, min_salary)
+    begin
+    @stall = role_line.stall
+    @shift = role_line.shift
+
+    @normal_day_hours = 0
+    @day_salary       = 0
+    @extra_day_hours  = 0
+    @extra_day_salary = 0
+    @holiday          = 0
+
+    if @shift.name == "Libre" || @shift.name == "Vacaciones"
+
+      @day_salary = min_salary.to_f/30
+
+    elsif @shift.name == "Permiso" || @shift.name == "Ausente" || @shift.name == "Suspendido"
+
+      @day_salary = 0
+
+    elsif @shift.name == "Incapacidad"
+
+      @day_salary = 0
+
+      self.disabilities.order(:start_date).each do |last_disability_period|
+
+        dates = (last_disability_period.start_date..last_disability_period.end_date).map(&:to_date)
+        first_dates = dates[0, 3] if dates
+
+        if first_dates && (first_dates.include? Date.strptime(role_line.date, '%m/%d/%Y')) && last_disability_period.institution == "CCSS"
+          @day_salary = (min_salary.to_f/30)/2
+        end
+      end
+    else
+      @normal_day_hours = 0
+      @extra_day_hours  = 0
+      @shift.time       = role_line.position.hours if role_line.position.hours != nil && role_line.position.hours != ""
+      @hour_cost        = min_salary.to_f/30/@shift.time.to_f
+      @extra_day_hours  = role_line.hours.to_f - @shift.time.to_f if role_line.hours.to_f > @shift.time.to_f && @shift.payment.name != "Normal"
+      @normal_day_hours = role_line.hours.to_f - @extra_day_hours
+      @day_salary       = @normal_day_hours * @hour_cost
+      @extra_day_salary = ((min_salary.to_f/30)/@shift.time.to_f) * @shift.extra_time_cost.to_f * @extra_day_hours
+
+      calculate_holiday(role_line, @shift, min_salary)
+    end
+    rescue => ex
+      logger.error ex.message
     end
   end
 end

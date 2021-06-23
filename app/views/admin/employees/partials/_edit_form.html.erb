@@ -124,6 +124,10 @@
       <%= form.select(:sub_service_ids, SubService.all.order(name: :asc).collect {|t| [t.name, t.id]}, {include_blank: false}, {multiple: true, size: 3, class: "form-control", id: "sub_service"}) %>
       <label id="sub_service_error"></label>
     </div>
+    <div class="col-xl-12 col-lg-12 mb-2">
+      <label for="">En caso que desee que a este colaborador se le aplique el rebajo de CCSS por un salario diferente al establecido en el rango o en la cotización, ingrese acá el salario deseado.</label>
+      <%= form.number_field :own_ccss_deduction, step: :any, min: 0, class: "form-control", placeholder: "350000" %>
+    </div>
     <div class="col-xl-3 col-lg-6 mb-2 mt-2">
       <label for="">Viáticos:</label><br>
       <%= form.check_box :daily_viatical, {}, checked_value = "yes", unchecked_value = "not" %>

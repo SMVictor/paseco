@@ -139,6 +139,10 @@
           <p><%= sub_service.name %></p>
         <% end -%>
       </div>
+      <div class="col-md-3 col-sm-6 mt-2">
+        <strong>Salario CCSS:</strong>
+        <p><%= @employee.own_ccss_deduction %></p>
+      </div>
       <div class="col-md-3 col-sm-6 mb-2 mt-2">
         <strong>Víaticos:</strong>
         <% if @employee.daily_viatical == "not" %>
