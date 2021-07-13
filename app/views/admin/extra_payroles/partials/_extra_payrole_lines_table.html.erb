@@ -14,30 +14,36 @@
       <% @total_extra_hours    = 0 %>
       <% @total_daily_viatical = 0 %>
       <% @total_net_salary     = 0 %>
+      <% @index                = 0 %>
 
-      <% @extra_payrole_lines.each_with_index do |line, index| %>
+      <% @extra_payrole_lines.each do |line| %>
 
-        <% @total_net_salary     += line.total.to_f.round(2) %>
-        <% parcial_base      = 0 %>
-        <% parcial_extra     = 0 %>
-        <% parcial_viatical  = 0 %>
+        <% if line.total.to_f > 0 %>
 
-        <% line.christmas_bonification_lines.each do |detail| %>
-          <% @total_min_salary     += detail.base_salary.to_f %>
-          <% @total_extra_hours    += detail.extra_payment.to_f %>
-          <% @total_daily_viatical += detail.viaticals.to_f %>
+          <% @total_net_salary     += line.total.to_f.round(2) %>
+          <% parcial_base      = 0 %>
+          <% parcial_extra     = 0 %>
+          <% parcial_viatical  = 0 %>
 
-          <% parcial_base     += detail.base_salary.to_f %>
-          <% parcial_extra    += detail.extra_payment.to_f %>
-          <% parcial_viatical += detail.viaticals.to_f %>
+          <% line.christmas_bonification_lines.each do |detail| %>
+            <% @total_min_salary     += detail.base_salary.to_f %>
+            <% @total_extra_hours    += detail.extra_payment.to_f %>
+            <% @total_daily_viatical += detail.viaticals.to_f %>
+
+            <% parcial_base     += detail.base_salary.to_f %>
+            <% parcial_extra    += detail.extra_payment.to_f %>
+            <% parcial_viatical += detail.viaticals.to_f %>
+          <% end %>
+
+          <tr>
+            <td style="border: 1px solid;"><%= @index+1 %></td>
+            <td style="border: 1px solid"><%= link_to(line.name, admin_edit_bonuses_path(line.employee, @extra_payrole)) %></td>
+            <td style="border: 1px solid"><%= number_to_currency(line.total, unit: '₡') %></td>
+            <td style="border: 1px solid"><%= line.bank %></td>
+          </tr>
+
+          <% @index += 1 %>
         <% end %>
-
-        <tr>
-          <td style="border: 1px solid;"><%= index+1 %></td>
-          <td style="border: 1px solid"><%= link_to(line.name, admin_edit_bonuses_path(line.employee, @extra_payrole)) %></td>
-          <td style="border: 1px solid"><%= number_to_currency(line.total, unit: '₡') %></td>
-          <td style="border: 1px solid"><%= line.bank %></td>
-        </tr>
       <% end %>
         <tr>
           <td style="border: 1px solid"></td>
