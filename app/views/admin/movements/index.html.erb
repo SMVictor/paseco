@@ -1,13 +1,9 @@
 <div class="bg-body-light">
   <div class="content content-full">
     <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-      <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Movimientos</h1>
-      <select name="status" id="status" onchange="filterByStatus()">
-        <option value="Activo">Activo</option>
-        <option value="Inactivo">Inactivo</option>
-      </select>
-      <%= link_to(new_admin_payment_path, class: 'btn btn-success flex-sm-00-auto ml-sm-3') do %>
-        <i class="fa fa-fw fa-plus mr-1"></i>Crear Pago
+      <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Movimientos Automáticos</h1>
+      <%= link_to(new_admin_movement_path, class: 'btn btn-success flex-sm-00-auto ml-sm-3') do %>
+        <i class="fa fa-fw fa-plus mr-1"></i>Nuevo Movimiento
       <% end %>
     </div>
     <% if flash[:notice] %>
@@ -20,4 +16,4 @@
     <% end %>
   </div>
 </div>
-<div id="paymentsTable"><%= render 'admin/payments/partials/table', locals: {payments:  @payments}%></div>
+<div id="movementsTable"><%= render 'admin/movements/partials/table', locals: {movements:  @movements}%></div>

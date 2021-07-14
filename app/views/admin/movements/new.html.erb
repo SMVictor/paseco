@@ -1,0 +1,20 @@
+<div class="bg-body-light">
+    <div class="content content-full">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h3 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Nuevo Movimiento</h3>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <%= link_to('Movimientos', admin_movements_path, class: 'breadcrumb-item')%>
+                    <li class="breadcrumb-item active" aria-current="page">Nuevo Movimiento</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div class="col-sm-12">
+    <%= form_for(@movement, url: admin_movements_path(@movement), html: {multipart: true}) do |form| %>
+      <%= render 'admin/movements/partials/form', form: form %>
+    <% end %>
+  </div>
+</div>

@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="col-xl-2 col-md-6 mt-2">
-      <label for="">Cantidad</label>
+      <label for="">Monto</label>
       <%= f.number_field :amount, step: :any, min: 1, class: "form-control", placeholder: "15000 / 10.5", required: true, oninvalid: "setCustomValidity('Ingrese un valor')", onchange: "setCustomValidity('')", title: "Si en la opción 'Método' seleccionó 'Monto', deberá ingresar el monto que desea que sea acreditado o debitado.\n\n Si en la opción 'Método' seleccionó 'Porcentaje', deberá ingresar el porcentaje que desea que sea acreditado o debitado según el salario base de la quincena." %>
     </div>
     <div class="col-xl-2 col-md-6 mt-2">

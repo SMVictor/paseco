@@ -1,0 +1,51 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row form_fieldset">
+      <div  class="col-12 mt-4">
+        <legend>Información General</legend>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Colaborador</label>
+         <%= form.select(:employee_id, Employee.where(active: true).order(:name).map { |employee| [employee.name, employee.id] }, {:include_blank => 'Seleccione'}, { class: "form-control movement_employee", required: true, oninvalid: "setCustomValidity('Seleccione un colaborador.')", onchange: "setCustomValidity('')", title: "Seleccione un colaborador." }) %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Inicio</label>
+        <%= form.text_field :start_date, id: "date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', required: true, oninvalid: "setCustomValidity('Seleccione una fecha de inicio.')", onchange: "setCustomValidity('')", title: "Seleccione una fecha de inicio." %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Fin</label>
+        <%= form.text_field :end_date, id: "end_date", placeholder: "26/01/2020", autocomplete: "off", class: "form-control", "data-date-format": 'dd/mm/yyyy', "data-provide": 'datepicker', "data-date-language": 'es', title: "Seleccione una fecha de fin." %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Tipo</label>
+        <%= form.select(:affair, ["Crédito", "Débito"], {:include_blank => 'Seleccione'}, { class: "form-control", required: true, oninvalid: "setCustomValidity('Seleccione un tipo.')", onchange: "setCustomValidity('')", title: "Seleccione un tipo."}) %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Método</label>
+        <%= form.select(:way, ["Monto", "Porcentaje"], {:include_blank => 'Seleccione'}, { class: "form-control", required: true, oninvalid: "setCustomValidity('Seleccione un método.')", onchange: "setCustomValidity('')", title: "Seleccione un método."}) %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Monto</label>
+        <%= form.number_field :amount, step: :any, min: 1, class: "form-control", placeholder: "15000 / 10.5", required: true, oninvalid: "setCustomValidity('Ingrese un valor')", onchange: "setCustomValidity('')", title: "Si en la opción 'Método' seleccionó 'Monto', deberá ingresar el monto que desea que sea acreditado o debitado.\n\n Si en la opción 'Método' seleccionó 'Porcentaje', deberá ingresar el porcentaje que desea que sea acreditado o debitado según el salario base de la quincena." %>
+      </div>
+      <div class="col-6 col-md-3 mb-2 mt-2">
+        <label for="">Comentario</label>
+        <%= form.select(:comment, Movement.order(:comment).map { |f| f.comment }, {:include_blank => 'Seleccione'}, { class: "form-control movement_comment", required: true, oninvalid: "setCustomValidity('Ingrese un comentario.')", onchange: "setCustomValidity('')", title: "Ingrese un comentario." }) %>
+      </div>
+    </div>
+    <%= form.submit "Guardar", id: 'btn_submit', class: "btn btn-success mt-4" %>
+    <%= link_to('Cancelar', admin_movements_path, class: 'btn btn-light ml-sm-3 mt-4')%>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  $('.movement_employee').select2({
+    tags: true
+  });
+
+
+  $('.movement_comment').select2({
+    tags: true
+  });
+</script>

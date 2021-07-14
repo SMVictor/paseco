@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row mt-1 d-none d-md-flex text-center" style="">
+      <div class="th col-6 col-md-3 pt-md-3">
+        <p class="text-uppercase text">Colaborador</p>
+      </div>
+      <div class="th col-6 col-md-2 pt-md-3">
+        <p class="text-uppercase">Periodo</p>
+      </div>
+      <div class="th col-6 col-md-1 pt-md-3">
+        <p class="text-uppercase">Tipo</p>
+      </div>
+      <div class="th col-6 col-md-1 pt-md-3">
+        <p class="text-uppercase">Método</p>
+      </div>
+      <div class="th col-6 col-md-1 pt-md-3">
+        <p class="text-uppercase">Monto</p>
+      </div>
+      <div class="th col-6 col-md-2 pt-md-3">
+        <p class="text-uppercase">Comentario</p>
+      </div>
+      <div class="th col-6 col-md-2 pt-md-3">
+        <p class="text-uppercase">Acciones</p>
+      </div>
+    </div>
+    <% if @movements %>
+      <% @movements.each do |movement| %>
+        <div class="row tb_body">
+          <div class="td col-6 col-md-3  pt-md-3">
+            <p class="d-md-none font-weight-bold">Colaborador:</p>
+            <p class="text-md-center mt-2"><%= movement.employee.name %></p>
+          </div>
+          <div class="td col-6 col-md-2  pt-md-3">
+            <p class="d-md-none font-weight-bold">Perido:</p>
+            <% if movement.end_date %>
+              <p class="text-md-center mt-2"><%= movement.start_date.strftime('%d/%m/%Y') + ' - ' + movement.end_date.strftime('%d/%m/%Y') %></p>
+            <% else %>
+              <p class="text-md-center mt-2"><%= movement.start_date.strftime('%d/%m/%Y') %></p>
+            <% end %>
+          </div>
+          <div class="td col-6 col-md-1 pt-md-3">
+            <p class="d-md-none font-weight-bold">Tipo:</p>
+            <p class="text-md-center mt-2"><%= movement.affair %></p>
+          </div>
+          <div class="td col-6 col-md-1  pt-md-3">
+            <p class="d-md-none font-weight-bold">Método:</p>
+            <p class="text-md-center mt-2"><%= movement.way %></p>
+          </div>
+          <div class="td col-6 col-md-1  pt-md-3">
+            <p class="d-md-none font-weight-bold">Monto:</p>
+            <p class="text-md-center mt-2"><%= movement.amount %></p>
+          </div>
+          <div class="th col-6 col-md-2 pt-md-3">
+            <p class="d-md-none font-weight-bold">Comentario:</p>
+            <p class="text-md-center mt-2"><%= movement.comment %></p>
+          </div>
+          <div class="th text-center col-12 col-md-2">
+            <div class="btn-group mt-2">
+              <%= link_to(edit_admin_movement_path(movement), class:'btn primary-btn', title: 'Editar Movimiento') do %>
+                <i class="fa fa-pencil-alt"></i>
+              <% end -%>
+              <button type="button" class="btn delete-btn" data-toggle="modal" title="Eliminar Movimiento" data-target="#deleteMovement<%= movement.id %>">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <%= render 'admin/movements/partials/delete_modal', movement: movement %>
+      <% end %>
+    <%end %>
+  </div>
+</div>
