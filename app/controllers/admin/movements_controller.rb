@@ -5,7 +5,7 @@ module Admin
     before_action :set_movement, only: [:edit]
 
     def index
-      @movements = Movement.joins(:employee).where('(movements.start_date <= ? AND movements.end_date >= ?) OR (movements.start_date <= ? AND movements.end_date IS ?)', Time.now, Time.now, Time.now, nil ).order(name: :asc, start_date: :asc)
+      @movements = Movement.joins(:employee).where('(employees.active =? AND movements.start_date <= ? AND movements.end_date >= ?) OR (employees.active =? AND movements.start_date <= ? AND movements.end_date IS ?)', true, Time.now, Time.now, true, Time.now, nil ).order(name: :asc, start_date: :asc)
     end
 
     def new
