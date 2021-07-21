@@ -141,7 +141,7 @@
     </div>
     <div class="col-xl-3 col-lg-6 mb-2 mt-2">
       <label for="">Activo:</label><br>
-      <%= form.check_box :active %>
+      <%= form.check_box :active, id: "active_checkbox", onchange: "inactiveEmployeeAlert()" %>
     </div>
     <div class="col-xl-3 col-lg-6 mb-2 mt-2">
       <label for="">Pensionado:</label><br>

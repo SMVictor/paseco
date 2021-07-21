@@ -128,3 +128,10 @@ function registerEmployee(employeeID){
       data: form_data
     });
   }
+
+function inactiveEmployeeAlert(){
+  alert("Si desea desactivar a este colaborador, por favor recuerde no dejar movimientos automáticos, periodos de contratación ó incapacidades sin fecha de fin, ya que en caso de activar nuevamente este colaborador en el futuro, estos podrian ser tomados en cuenta nuevamente por el sistema.");
+}
+
+
+
