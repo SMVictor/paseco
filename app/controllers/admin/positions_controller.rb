@@ -6,7 +6,15 @@ class PositionsController < ApplicationController
   before_action :set_position, only: [:show, :edit, :update, :destroy]
 
   def index
-    @positions = Position.all.order(name: :asc)
+    if params[:status]
+      @positions = Position.where(status: params[:status]).order(name: :asc)
+    else
+      @positions = Position.where(status: 'Activo').order(name: :asc)
+    end
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def show
@@ -60,7 +68,7 @@ class PositionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def position_params
-      params.require(:position).permit(:name, :salary, :daily_viatical, :hours, :area_id)
+      params.require(:position).permit(:name, :salary, :daily_viatical, :hours, :area_id, :status)
     end
 end
 end

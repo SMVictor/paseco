@@ -1,28 +1,32 @@
 <div class="card">
   <div class="card-body">
     <div class="row form_fieldset">
-      <div class="col-lg-4 mb-2 mt-2">
+      <div class="col-md-4 col-12 mb-2 mt-2">
         <label for="">Nombre</label>
         <%= form.text_field :name, id: "name", class: "form-control", placeholder: "Librero 1" %>
         <label id="name_error"></label>
       </div>
-      <div class="col-lg-4 mb-2 mt-2">
+      <div class="col-md-4 col-12 mb-2 mt-2">
         <label for="">Salario</label>
         <%= form.text_field :salary, id: "salary", class: "form-control", placeholder: "425000" %>
         <label id="salary_error"></label>
       </div>
-      <div class="col-lg-4 mb-2 mt-2">
+      <div class="col-md-4 col-12 mb-2 mt-2">
         <label for="">Horas</label>
         <%= form.text_field :hours, id: "hours", class: "form-control", placeholder: "8" %>
       </div>
-      <div class="col-lg-4 mb-2 mt-2">
+      <div class="col-md-4 col-12 mb-2 mt-2">
         <label for="">Área</label>
         <%= form.collection_select :area_id, Area.all.order(name: :asc), :id, :name, options = {include_blank: 'Seleccione el área a la que pertenece '}, html_options = {class: "form-control", id: "area"}%>
         <label id="area_error"></label>
       </div>
-      <div class="col-lg-4 mb-2 mt-2">
+      <div class="col-md-4 col-6 mb-2 mt-2">
         <label for="">Víaticos</label><br>
         <%= form.check_box :daily_viatical %>
+      </div>
+      <div class="col-md-4 col-6 mb-2 mt-2">
+        <label for="">Activo</label><br>
+        <%= form.check_box :status, {}, "Activo", "Inactivo" %>
       </div>
     </div>
     

@@ -111,7 +111,7 @@
     </div>
     <div class="col-xl-3 col-lg-6 mt-2">
       <label for="">Cargo en la Empresa</label>
-      <%= form.select(:position_ids, Position.all.order(name: :asc).collect {|t| [t.name, t.id]}, {include_blank: false}, {multiple: true, size: 3, class: "form-control", id: "selectRole"}) %>
+      <%= form.select(:position_ids, Position.where(status: "Activo").order(name: :asc).collect {|t| [t.name, t.id]}, {include_blank: false}, {multiple: true, size: 3, class: "form-control", id: "selectRole"}) %>
       <label id="selectRole_error"></label>
     </div>
     <div class="col-xl-3 col-lg-6 mt-2">

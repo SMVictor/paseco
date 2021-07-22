@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_11_002608) do
+ActiveRecord::Schema.define(version: 2021_07_22_001740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -340,6 +340,7 @@ ActiveRecord::Schema.define(version: 2021_06_11_002608) do
     t.boolean "daily_viatical"
     t.string "hours"
     t.bigint "area_id"
+    t.string "status", default: "Activo"
     t.index ["area_id"], name: "index_positions_on_area_id"
   end
 
