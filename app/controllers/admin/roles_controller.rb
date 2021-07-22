@@ -309,7 +309,7 @@ class RolesController < ApplicationController
       send_payslips = false
       stalls = employee.stalls
       stalls.each do |stall|
-        send_payslips = stall.send_payslips
+        send_payslips = stall.send_payslips if tall.send_payslips == true
       end
 
       if send_payslips
