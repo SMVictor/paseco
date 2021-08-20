@@ -92,8 +92,10 @@
           </thead>
           <tbody>
             <tr>
+              <% base_salary = @employee.payrole_details.where(role_id: @payrole.id).first.base_salary.to_f - @employee.payrole_details.where(role_id: @payrole.id).first.holidays %>
+
           	  <td>Salario Base</td>
-              <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.base_salary, unit: '₡') rescue nil %></td>
+              <td><%= number_to_currency(base_salary, unit: '₡') rescue nil %></td>
               <td>Horas Extras</td>
               <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.extra_salary, unit: '₡') rescue nil %></td>
             </tr>
@@ -102,6 +104,10 @@
               <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.viatical, unit: '₡') rescue nil %></td>
               <td>Pagos Adicionales</td>
               <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.extra_payments, unit: '₡') rescue nil %></td>
+            </tr>
+            <tr>
+              <td>Feriados</td>
+              <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.holidays, unit: '₡') rescue nil %></td>
             </tr>
             <tr>
           	  <td>Salario Bruto</td>
@@ -114,6 +120,10 @@
               <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.deductions, unit: '₡') rescue nil %></td>
               <td>Salario Neto</td>
               <td><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.net_salary, unit: '₡') rescue nil %></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>

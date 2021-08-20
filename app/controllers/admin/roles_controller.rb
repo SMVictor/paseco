@@ -454,6 +454,7 @@ class RolesController < ApplicationController
 
       payrole_detail.worked_days    = employee.total_days
       payrole_detail.base_salary    = (employee.total_day_salary + employee.total_holidays).round(2)
+      payrole_detail.holidays       = (employee.total_holidays).round(2)
       payrole_detail.extra_hours    = employee.total_extra_hours.round(2)
       payrole_detail.extra_salary   = employee.total_extra_salary.round(2)
       payrole_detail.viatical       = employee.total_viatical.round(2)

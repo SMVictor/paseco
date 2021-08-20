@@ -130,13 +130,19 @@
           <div class="col-6">
             <div class="row">
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">Salario Base</div>
-              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.base_salary, unit: '₡') rescue nil %></div>
+
+              <% base_salary = @employee.payrole_details.where(role_id: @payrole.id).first.base_salary.to_f - @employee.payrole_details.where(role_id: @payrole.id).first.holidays %>
+
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(base_salary, unit: '₡') rescue nil %></div>
+
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">Horas Extras</div>
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.extra_salary, unit: '₡') rescue nil %></div>
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">Víaticos</div>
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.viatical, unit: '₡') rescue nil %></div>
-              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-left: 1px solid;">Pagos Adicionales</div>
-              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.extra_payments, unit: '₡') rescue nil %></div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-left: 1px solid;">Pagos Adicionales</div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; "><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.extra_payments, unit: '₡') rescue nil %></div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid; border-left: 1px solid;">Feriados</div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.holidays, unit: '₡') rescue nil %></div>
             </div>
           </div>
           <div class="col-6">
@@ -147,8 +153,11 @@
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.ccss_deduction, unit: '₡') rescue nil %></div>
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;">Otras Deducciones</div>
               <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.deductions, unit: '₡') rescue nil %></div>
-              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;">Salario Neto</div>
-              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.net_salary, unit: '₡') rescue nil %></div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;">Salario Neto</div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid;"><%= number_to_currency(@employee.payrole_details.where(role_id: @payrole.id).first.net_salary, unit: '₡') rescue nil %></div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;">N/A</div>
+              <div class="col-6" style="border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;">₡0</div>
+
             </div>
           </div>
         </div>
