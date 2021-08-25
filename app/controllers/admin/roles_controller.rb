@@ -163,6 +163,7 @@ class RolesController < ApplicationController
       @payrole_lines = @payrole.payrole_lines.where(id: params[:ids]).order(name: :asc)
     else
       @payrole_lines = @payrole.payrole_lines.order(name: :asc)
+      BonusesWorker.perform_async()
     end
     respond_to do |format|
       format.js
