@@ -4,9 +4,9 @@ class BonusesWorker
 
   def perform
   	employees = Employee.where(active: true)
+    role = Role.order(:id).last
   	employees.each do |employee|
   	  update_christmas_bonuses(employee)
-      role = Role.order(id).last
       if (DateTime.parse(role.end_date) + 5.days) > Date.today
         update_payrole_info(role, employee)
       end
