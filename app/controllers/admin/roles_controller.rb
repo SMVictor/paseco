@@ -162,7 +162,7 @@ class RolesController < ApplicationController
     if params[:ids]
       @payrole_lines = @payrole.payrole_lines.where(id: params[:ids]).order(name: :asc)
     else
-      @payrole_lines = @payrole.payrole_lines.order(name: :asc)
+      @payrole_lines = @payrole.payrole_lines.where("net_salary::float > ?", 0).order(name: :asc)
       BonusesWorker.perform_async()
     end
     respond_to do |format|
